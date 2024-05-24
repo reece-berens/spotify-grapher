@@ -34,6 +34,8 @@ namespace GrapherForm
                 tb_Environment_RemovedArtists.Text = environment.RemovedArtistFile;
                 tb_Environment_MusicFinished.Text = environment.MusicFinishedFile;
                 tb_Environment_MusicReview.Text = environment.MusicToReviewFile;
+                tb_Tokens_ClientID.Text = environment.ClientID;
+                tb_Tokens_ClientSecret.Text = environment.ClientSecret;
             }
         }
 
@@ -47,6 +49,8 @@ namespace GrapherForm
                 RemovedArtistFile = tb_Environment_RemovedArtists.Text,
                 MusicFinishedFile = tb_Environment_MusicFinished.Text,
                 MusicToReviewFile = tb_Environment_MusicReview.Text,
+                ClientID = tb_Tokens_ClientID.Text,
+                ClientSecret = tb_Tokens_ClientSecret.Text,
             };
             _foundArtists ??= [];
             _reviewArtists ??= [];
@@ -54,6 +58,23 @@ namespace GrapherForm
             _musicFinished ??= [];
             _musicToReview ??= [];
             FileHandler.SaveEnvironment(tb_Environment_FilePath.Text, environment, _foundArtists, _reviewArtists, _removedArtists, _musicFinished, _musicToReview);
+        }
+
+        private void btn_Tokens_Refresh_Click(object sender, EventArgs e)
+        {
+            string curRefreshToken = tb_Tokens_Refresh.Text;
+            string clientID = tb_Tokens_ClientID.Text;
+            string clientSecret = tb_Tokens_ClientSecret.Text;
+
+            string newAccessToken = APIHandler.RefreshAccessToken(curRefreshToken, clientID, clientSecret).Result;
+            if (newAccessToken == null)
+            {
+                MessageBox.Show("ERROR refreshing access token, stopping now.");
+            }
+            else
+            {
+                tb_Tokens_Access.Text = newAccessToken;
+            }
         }
     }
 }

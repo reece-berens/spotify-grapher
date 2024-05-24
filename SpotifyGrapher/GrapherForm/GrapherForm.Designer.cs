@@ -47,7 +47,18 @@
             lbl_Environment_FilePath = new Label();
             tb_Environment_FilePath = new TextBox();
             ofd_Environment_FileDialog = new OpenFileDialog();
+            gb_Tokens = new GroupBox();
+            btn_Tokens_Refresh = new Button();
+            lbl_Tokens_Refresh = new Label();
+            tb_Tokens_Refresh = new TextBox();
+            lbl_Tokens_Access = new Label();
+            tb_Tokens_Access = new TextBox();
+            tb_Tokens_ClientID = new TextBox();
+            lbl_Tokens_ClientID = new Label();
+            tb_Tokens_ClientSecret = new TextBox();
+            lbl_Tokens_ClientSecret = new Label();
             gb_Environment.SuspendLayout();
+            gb_Tokens.SuspendLayout();
             SuspendLayout();
             // 
             // gb_Environment
@@ -222,16 +233,111 @@
             // 
             ofd_Environment_FileDialog.FileName = "openFileDialog1";
             // 
+            // gb_Tokens
+            // 
+            gb_Tokens.Controls.Add(lbl_Tokens_ClientSecret);
+            gb_Tokens.Controls.Add(tb_Tokens_ClientSecret);
+            gb_Tokens.Controls.Add(lbl_Tokens_ClientID);
+            gb_Tokens.Controls.Add(tb_Tokens_ClientID);
+            gb_Tokens.Controls.Add(btn_Tokens_Refresh);
+            gb_Tokens.Controls.Add(lbl_Tokens_Refresh);
+            gb_Tokens.Controls.Add(tb_Tokens_Refresh);
+            gb_Tokens.Controls.Add(lbl_Tokens_Access);
+            gb_Tokens.Controls.Add(tb_Tokens_Access);
+            gb_Tokens.Location = new Point(517, 12);
+            gb_Tokens.Name = "gb_Tokens";
+            gb_Tokens.Size = new Size(906, 252);
+            gb_Tokens.TabIndex = 1;
+            gb_Tokens.TabStop = false;
+            gb_Tokens.Text = "Auth Tokens";
+            // 
+            // btn_Tokens_Refresh
+            // 
+            btn_Tokens_Refresh.Location = new Point(6, 202);
+            btn_Tokens_Refresh.Name = "btn_Tokens_Refresh";
+            btn_Tokens_Refresh.Size = new Size(189, 32);
+            btn_Tokens_Refresh.TabIndex = 4;
+            btn_Tokens_Refresh.Text = "Refresh Access Token";
+            btn_Tokens_Refresh.UseVisualStyleBackColor = true;
+            btn_Tokens_Refresh.Click += btn_Tokens_Refresh_Click;
+            // 
+            // lbl_Tokens_Refresh
+            // 
+            lbl_Tokens_Refresh.AutoSize = true;
+            lbl_Tokens_Refresh.Location = new Point(6, 83);
+            lbl_Tokens_Refresh.Name = "lbl_Tokens_Refresh";
+            lbl_Tokens_Refresh.Size = new Size(80, 15);
+            lbl_Tokens_Refresh.TabIndex = 3;
+            lbl_Tokens_Refresh.Text = "Refresh Token";
+            // 
+            // tb_Tokens_Refresh
+            // 
+            tb_Tokens_Refresh.Location = new Point(6, 101);
+            tb_Tokens_Refresh.Name = "tb_Tokens_Refresh";
+            tb_Tokens_Refresh.Size = new Size(869, 23);
+            tb_Tokens_Refresh.TabIndex = 2;
+            // 
+            // lbl_Tokens_Access
+            // 
+            lbl_Tokens_Access.AutoSize = true;
+            lbl_Tokens_Access.Location = new Point(6, 28);
+            lbl_Tokens_Access.Name = "lbl_Tokens_Access";
+            lbl_Tokens_Access.Size = new Size(77, 15);
+            lbl_Tokens_Access.TabIndex = 1;
+            lbl_Tokens_Access.Text = "Access Token";
+            // 
+            // tb_Tokens_Access
+            // 
+            tb_Tokens_Access.Location = new Point(6, 46);
+            tb_Tokens_Access.Name = "tb_Tokens_Access";
+            tb_Tokens_Access.Size = new Size(869, 23);
+            tb_Tokens_Access.TabIndex = 0;
+            // 
+            // tb_Tokens_ClientID
+            // 
+            tb_Tokens_ClientID.Location = new Point(6, 161);
+            tb_Tokens_ClientID.Name = "tb_Tokens_ClientID";
+            tb_Tokens_ClientID.Size = new Size(333, 23);
+            tb_Tokens_ClientID.TabIndex = 5;
+            // 
+            // lbl_Tokens_ClientID
+            // 
+            lbl_Tokens_ClientID.AutoSize = true;
+            lbl_Tokens_ClientID.Location = new Point(6, 143);
+            lbl_Tokens_ClientID.Name = "lbl_Tokens_ClientID";
+            lbl_Tokens_ClientID.Size = new Size(52, 15);
+            lbl_Tokens_ClientID.TabIndex = 6;
+            lbl_Tokens_ClientID.Text = "Client ID";
+            // 
+            // tb_Tokens_ClientSecret
+            // 
+            tb_Tokens_ClientSecret.Location = new Point(436, 161);
+            tb_Tokens_ClientSecret.Name = "tb_Tokens_ClientSecret";
+            tb_Tokens_ClientSecret.Size = new Size(439, 23);
+            tb_Tokens_ClientSecret.TabIndex = 7;
+            // 
+            // lbl_Tokens_ClientSecret
+            // 
+            lbl_Tokens_ClientSecret.AutoSize = true;
+            lbl_Tokens_ClientSecret.Location = new Point(436, 143);
+            lbl_Tokens_ClientSecret.Name = "lbl_Tokens_ClientSecret";
+            lbl_Tokens_ClientSecret.Size = new Size(73, 15);
+            lbl_Tokens_ClientSecret.TabIndex = 8;
+            lbl_Tokens_ClientSecret.Text = "Client Secret";
+            // 
             // GrapherForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(2008, 919);
+            Controls.Add(gb_Tokens);
             Controls.Add(gb_Environment);
             Name = "GrapherForm";
             Text = "Spotify Grapher v1";
             gb_Environment.ResumeLayout(false);
             gb_Environment.PerformLayout();
+            gb_Tokens.ResumeLayout(false);
+            gb_Tokens.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -256,5 +362,15 @@
         private TextBox tb_Environment_ArtistsReview;
         private Label lbl_Environment_MusicReview;
         private TextBox tb_Environment_MusicReview;
+        private GroupBox gb_Tokens;
+        private Button btn_Tokens_Refresh;
+        private Label lbl_Tokens_Refresh;
+        private TextBox tb_Tokens_Refresh;
+        private Label lbl_Tokens_Access;
+        private TextBox tb_Tokens_Access;
+        private Label lbl_Tokens_ClientSecret;
+        private TextBox tb_Tokens_ClientSecret;
+        private Label lbl_Tokens_ClientID;
+        private TextBox tb_Tokens_ClientID;
     }
 }
