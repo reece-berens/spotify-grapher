@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -33,7 +34,7 @@ namespace GrapherForm
             HttpResponseMessage response;
             lock(ClientLock)
             {
-                response = HttpClient.SendAsync(request).Result;
+                response = HttpClient.Send(request);
             }
 
             string responseJson = await response.Content.ReadAsStringAsync();
@@ -48,12 +49,56 @@ namespace GrapherForm
             }
         }
 
+        public static async Task<RelatedArtistsResponse> GetRelatedArtists(string artistID, string accessToken)
+        {
+            HttpRequestMessage request = new()
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new($"https://api.spotify.com/v1/artists/{artistID}/related-artists")
+            };
+            request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessToken);
+
+            HttpResponseMessage response;
+            lock(ClientLock)
+            {
+                response = HttpClient.Send(request);
+            }
+
+            string responseJson = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+            {
+                RelatedArtistsResponse artistsResponse = JsonSerializer.Deserialize<RelatedArtistsResponse>(responseJson);
+                return artistsResponse;
+            }
+            else
+            {
+                Console.WriteLine("ERROR with related artists");
+                Console.WriteLine(response.StatusCode);
+                Console.WriteLine(responseJson);
+                return null;
+            }
+            
+        }
+
         public class RefreshAccessTokenResponse
         {
             public string access_token { get; set; }
             public string token_type { get; set; }
             public int expires_in { get; set; }
             public string scope { get; set; }
+        }
+
+        public class RelatedArtistsResponse
+        {
+            public List<Artist> artists { get; set; }
+
+            public class Artist
+            {
+                public List<string> genres { get; set; }
+                public string id { get; set; }
+                public string name { get; set; }
+                public string type { get; set; }
+            }
         }
     }
 }

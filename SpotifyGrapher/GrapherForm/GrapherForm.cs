@@ -1,4 +1,5 @@
 using GrapherForm.Models;
+using System.ComponentModel;
 
 namespace GrapherForm
 {
@@ -9,6 +10,11 @@ namespace GrapherForm
         private Dictionary<string, FoundArtist> _removedArtists = null;
         private Dictionary<string, string> _musicFinished = null;
         private Dictionary<string, MusicToReview> _musicToReview = null;
+
+        private BackgroundWorker _graphArtistsWorker = null;
+
+        private string _tempAccessToken = null;
+        private Random _random = new();
 
         public GrapherForm()
         {
@@ -75,6 +81,87 @@ namespace GrapherForm
             {
                 tb_Tokens_Access.Text = newAccessToken;
             }
+        }
+
+        private void btn_Actions_GraphArtists_Click(object sender, EventArgs e)
+        {
+            if (btn_Actions_GraphArtists.Text.Contains("START"))
+            {
+                //we want to start this action
+                btn_Actions_GraphArtists.Text = "Graph Artists - STOP";
+                _graphArtistsWorker?.CancelAsync(); //just in case
+
+                _tempAccessToken = tb_Tokens_Access.Text;
+                _graphArtistsWorker = new();
+                _graphArtistsWorker.DoWork += GraphArtistsWorker;
+                _graphArtistsWorker.RunWorkerCompleted += GraphArtistsStop;
+                _graphArtistsWorker.WorkerSupportsCancellation = true;
+                _graphArtistsWorker.RunWorkerAsync();
+
+            }
+            else
+            {
+                //we want to stop this action
+                btn_Actions_GraphArtists.Text = "Graph Artists - START";
+                _graphArtistsWorker.CancelAsync();
+                _tempAccessToken = null;
+            }
+        }
+
+        public void GraphArtistsWorker(object sender, DoWorkEventArgs e)
+        {
+            for (int i = 0; i < _foundArtists.Count; i++)
+            {
+                KeyValuePair<string, FoundArtist> curItem = _foundArtists.ElementAt(i);
+                if (!curItem.Value.RelatedVisited)
+                {
+                    APIHandler.RelatedArtistsResponse thisResponse = APIHandler.GetRelatedArtists(curItem.Value.ID, _tempAccessToken).Result;
+                    if (thisResponse == null || thisResponse.artists == null)
+                    {
+                        //not good, exit out of loop now and come back to it after refreshing access token probably
+                        break;
+                    }
+                    else
+                    {
+                        foreach (APIHandler.RelatedArtistsResponse.Artist artist in thisResponse.artists)
+                        {
+                            if (!_foundArtists.ContainsKey(artist.id) && !_removedArtists.ContainsKey(artist.id) && !_reviewArtists.ContainsKey(artist.id))
+                            {
+                                //we haven't found this artist yet, figure out where to put them
+                                if (artist.name.Contains("radio", StringComparison.CurrentCultureIgnoreCase) || artist.genres.Any(x => x.Contains("country", StringComparison.CurrentCultureIgnoreCase)))
+                                {
+                                    _reviewArtists.Add(artist.id, new()
+                                    {
+                                        Genres = artist.genres,
+                                        ID = artist.id,
+                                        Name = artist.name,
+                                        RelatedVisited = false,
+                                    });
+                                }
+                                else
+                                {
+                                    //we'll assume they're fine for now
+                                    _foundArtists.Add(artist.id, new()
+                                    {
+                                        ID = artist.id,
+                                        Name = artist.name,
+                                        RelatedVisited = false,
+                                    });
+                                }
+                            }
+                        }
+                        curItem.Value.RelatedVisited = true;
+                        Task waitTask = Task.Delay(_random.Next(500, 1500));
+                        Task.WaitAll(waitTask);
+                    }
+                }
+            }
+        }
+
+        public void GraphArtistsStop(object sender, RunWorkerCompletedEventArgs e)
+        {
+            MessageBox.Show("Stopped graphing artists");
+            btn_Actions_GraphArtists.Text = "Graph Artists - START";
         }
     }
 }

@@ -48,17 +48,20 @@
             tb_Environment_FilePath = new TextBox();
             ofd_Environment_FileDialog = new OpenFileDialog();
             gb_Tokens = new GroupBox();
+            lbl_Tokens_ClientSecret = new Label();
+            tb_Tokens_ClientSecret = new TextBox();
+            lbl_Tokens_ClientID = new Label();
+            tb_Tokens_ClientID = new TextBox();
             btn_Tokens_Refresh = new Button();
             lbl_Tokens_Refresh = new Label();
             tb_Tokens_Refresh = new TextBox();
             lbl_Tokens_Access = new Label();
             tb_Tokens_Access = new TextBox();
-            tb_Tokens_ClientID = new TextBox();
-            lbl_Tokens_ClientID = new Label();
-            tb_Tokens_ClientSecret = new TextBox();
-            lbl_Tokens_ClientSecret = new Label();
+            gb_Actions = new GroupBox();
+            btn_Actions_GraphArtists = new Button();
             gb_Environment.SuspendLayout();
             gb_Tokens.SuspendLayout();
+            gb_Actions.SuspendLayout();
             SuspendLayout();
             // 
             // gb_Environment
@@ -251,6 +254,38 @@
             gb_Tokens.TabStop = false;
             gb_Tokens.Text = "Auth Tokens";
             // 
+            // lbl_Tokens_ClientSecret
+            // 
+            lbl_Tokens_ClientSecret.AutoSize = true;
+            lbl_Tokens_ClientSecret.Location = new Point(436, 143);
+            lbl_Tokens_ClientSecret.Name = "lbl_Tokens_ClientSecret";
+            lbl_Tokens_ClientSecret.Size = new Size(73, 15);
+            lbl_Tokens_ClientSecret.TabIndex = 8;
+            lbl_Tokens_ClientSecret.Text = "Client Secret";
+            // 
+            // tb_Tokens_ClientSecret
+            // 
+            tb_Tokens_ClientSecret.Location = new Point(436, 161);
+            tb_Tokens_ClientSecret.Name = "tb_Tokens_ClientSecret";
+            tb_Tokens_ClientSecret.Size = new Size(439, 23);
+            tb_Tokens_ClientSecret.TabIndex = 7;
+            // 
+            // lbl_Tokens_ClientID
+            // 
+            lbl_Tokens_ClientID.AutoSize = true;
+            lbl_Tokens_ClientID.Location = new Point(6, 143);
+            lbl_Tokens_ClientID.Name = "lbl_Tokens_ClientID";
+            lbl_Tokens_ClientID.Size = new Size(52, 15);
+            lbl_Tokens_ClientID.TabIndex = 6;
+            lbl_Tokens_ClientID.Text = "Client ID";
+            // 
+            // tb_Tokens_ClientID
+            // 
+            tb_Tokens_ClientID.Location = new Point(6, 161);
+            tb_Tokens_ClientID.Name = "tb_Tokens_ClientID";
+            tb_Tokens_ClientID.Size = new Size(333, 23);
+            tb_Tokens_ClientID.TabIndex = 5;
+            // 
             // btn_Tokens_Refresh
             // 
             btn_Tokens_Refresh.Location = new Point(6, 202);
@@ -293,43 +328,32 @@
             tb_Tokens_Access.Size = new Size(869, 23);
             tb_Tokens_Access.TabIndex = 0;
             // 
-            // tb_Tokens_ClientID
+            // gb_Actions
             // 
-            tb_Tokens_ClientID.Location = new Point(6, 161);
-            tb_Tokens_ClientID.Name = "tb_Tokens_ClientID";
-            tb_Tokens_ClientID.Size = new Size(333, 23);
-            tb_Tokens_ClientID.TabIndex = 5;
+            gb_Actions.Controls.Add(btn_Actions_GraphArtists);
+            gb_Actions.Location = new Point(1451, 12);
+            gb_Actions.Name = "gb_Actions";
+            gb_Actions.Size = new Size(545, 252);
+            gb_Actions.TabIndex = 2;
+            gb_Actions.TabStop = false;
+            gb_Actions.Text = "Actions";
             // 
-            // lbl_Tokens_ClientID
+            // btn_Actions_GraphArtists
             // 
-            lbl_Tokens_ClientID.AutoSize = true;
-            lbl_Tokens_ClientID.Location = new Point(6, 143);
-            lbl_Tokens_ClientID.Name = "lbl_Tokens_ClientID";
-            lbl_Tokens_ClientID.Size = new Size(52, 15);
-            lbl_Tokens_ClientID.TabIndex = 6;
-            lbl_Tokens_ClientID.Text = "Client ID";
-            // 
-            // tb_Tokens_ClientSecret
-            // 
-            tb_Tokens_ClientSecret.Location = new Point(436, 161);
-            tb_Tokens_ClientSecret.Name = "tb_Tokens_ClientSecret";
-            tb_Tokens_ClientSecret.Size = new Size(439, 23);
-            tb_Tokens_ClientSecret.TabIndex = 7;
-            // 
-            // lbl_Tokens_ClientSecret
-            // 
-            lbl_Tokens_ClientSecret.AutoSize = true;
-            lbl_Tokens_ClientSecret.Location = new Point(436, 143);
-            lbl_Tokens_ClientSecret.Name = "lbl_Tokens_ClientSecret";
-            lbl_Tokens_ClientSecret.Size = new Size(73, 15);
-            lbl_Tokens_ClientSecret.TabIndex = 8;
-            lbl_Tokens_ClientSecret.Text = "Client Secret";
+            btn_Actions_GraphArtists.Location = new Point(25, 46);
+            btn_Actions_GraphArtists.Name = "btn_Actions_GraphArtists";
+            btn_Actions_GraphArtists.Size = new Size(241, 33);
+            btn_Actions_GraphArtists.TabIndex = 0;
+            btn_Actions_GraphArtists.Text = "Graph Artists - START";
+            btn_Actions_GraphArtists.UseVisualStyleBackColor = true;
+            btn_Actions_GraphArtists.Click += btn_Actions_GraphArtists_Click;
             // 
             // GrapherForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(2008, 919);
+            Controls.Add(gb_Actions);
             Controls.Add(gb_Tokens);
             Controls.Add(gb_Environment);
             Name = "GrapherForm";
@@ -338,6 +362,7 @@
             gb_Environment.PerformLayout();
             gb_Tokens.ResumeLayout(false);
             gb_Tokens.PerformLayout();
+            gb_Actions.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -372,5 +397,7 @@
         private TextBox tb_Tokens_ClientSecret;
         private Label lbl_Tokens_ClientID;
         private TextBox tb_Tokens_ClientID;
+        private GroupBox gb_Actions;
+        private Button btn_Actions_GraphArtists;
     }
 }
