@@ -42,6 +42,8 @@ namespace GrapherForm
                 tb_Environment_MusicReview.Text = environment.MusicToReviewFile;
                 tb_Tokens_ClientID.Text = environment.ClientID;
                 tb_Tokens_ClientSecret.Text = environment.ClientSecret;
+
+                ResetReviewArtistListBox();
             }
         }
 
@@ -64,6 +66,9 @@ namespace GrapherForm
             _musicFinished ??= [];
             _musicToReview ??= [];
             FileHandler.SaveEnvironment(tb_Environment_FilePath.Text, environment, _foundArtists, _reviewArtists, _removedArtists, _musicFinished, _musicToReview);
+            MessageBox.Show("Save Completed");
+
+            ResetReviewArtistListBox();
         }
 
         private void btn_Tokens_Refresh_Click(object sender, EventArgs e)
@@ -151,7 +156,7 @@ namespace GrapherForm
                             }
                         }
                         curItem.Value.RelatedVisited = true;
-                        Task waitTask = Task.Delay(_random.Next(500, 1500));
+                        Task waitTask = Task.Delay(_random.Next(2000, 4000));
                         Task.WaitAll(waitTask);
                     }
                 }
@@ -162,6 +167,55 @@ namespace GrapherForm
         {
             MessageBox.Show("Stopped graphing artists");
             btn_Actions_GraphArtists.Text = "Graph Artists - START";
+        }
+
+        private void lb_artistsReview_artists_Change(object sender, EventArgs e)
+        {
+            object item = lb_artistsReview_artists.SelectedValue;
+            if (item is string typeItem && _reviewArtists.TryGetValue(typeItem, out FoundArtist artist))
+            {
+                lb_artistsReview_genres.DataSource = artist.Genres;
+            }
+        }
+
+        private void ResetReviewArtistListBox()
+        {
+            Dictionary<string, string> artistLBData = _reviewArtists.ToDictionary(x => x.Key, x => x.Value.Name);
+            lb_artistsReview_artists.DataSource = new BindingSource(artistLBData, null);
+            lb_artistsReview_artists.DisplayMember = "Value";
+            lb_artistsReview_artists.ValueMember = "Key";
+        }
+
+        private void btn_artistsReview_add_Click(object sender, EventArgs e)
+        {
+            object item = lb_artistsReview_artists.SelectedValue;
+            if (item is string typeItem && _reviewArtists.TryGetValue(typeItem, out FoundArtist artist))
+            {
+                _foundArtists.Add(artist.ID, new()
+                {
+                    ID = artist.ID,
+                    Name = artist.Name,
+                    RelatedVisited = false
+                });
+                _reviewArtists.Remove(artist.ID);
+                ResetReviewArtistListBox();
+            }
+        }
+
+        private void btn_artistsReview_remove_Click(object sender, EventArgs e)
+        {
+            object item = lb_artistsReview_artists.SelectedValue;
+            if (item is string typeItem && _reviewArtists.TryGetValue(typeItem, out FoundArtist artist))
+            {
+                _removedArtists.Add(artist.ID, new()
+                {
+                    ID = artist.ID,
+                    Name = artist.Name,
+                    RelatedVisited = false
+                });
+                _reviewArtists.Remove(artist.ID);
+                ResetReviewArtistListBox();
+            }
         }
     }
 }

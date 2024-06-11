@@ -59,9 +59,15 @@
             tb_Tokens_Access = new TextBox();
             gb_Actions = new GroupBox();
             btn_Actions_GraphArtists = new Button();
+            gb_artistsReview = new GroupBox();
+            btn_artistsReview_remove = new Button();
+            btn_artistsReview_add = new Button();
+            lb_artistsReview_genres = new ListBox();
+            lb_artistsReview_artists = new ListBox();
             gb_Environment.SuspendLayout();
             gb_Tokens.SuspendLayout();
             gb_Actions.SuspendLayout();
+            gb_artistsReview.SuspendLayout();
             SuspendLayout();
             // 
             // gb_Environment
@@ -333,7 +339,7 @@
             gb_Actions.Controls.Add(btn_Actions_GraphArtists);
             gb_Actions.Location = new Point(1451, 12);
             gb_Actions.Name = "gb_Actions";
-            gb_Actions.Size = new Size(545, 252);
+            gb_Actions.Size = new Size(429, 252);
             gb_Actions.TabIndex = 2;
             gb_Actions.TabStop = false;
             gb_Actions.Text = "Actions";
@@ -342,17 +348,70 @@
             // 
             btn_Actions_GraphArtists.Location = new Point(25, 46);
             btn_Actions_GraphArtists.Name = "btn_Actions_GraphArtists";
-            btn_Actions_GraphArtists.Size = new Size(241, 33);
+            btn_Actions_GraphArtists.Size = new Size(161, 33);
             btn_Actions_GraphArtists.TabIndex = 0;
             btn_Actions_GraphArtists.Text = "Graph Artists - START";
             btn_Actions_GraphArtists.UseVisualStyleBackColor = true;
             btn_Actions_GraphArtists.Click += btn_Actions_GraphArtists_Click;
             // 
+            // gb_artistsReview
+            // 
+            gb_artistsReview.Controls.Add(btn_artistsReview_remove);
+            gb_artistsReview.Controls.Add(btn_artistsReview_add);
+            gb_artistsReview.Controls.Add(lb_artistsReview_genres);
+            gb_artistsReview.Controls.Add(lb_artistsReview_artists);
+            gb_artistsReview.Location = new Point(523, 290);
+            gb_artistsReview.Name = "gb_artistsReview";
+            gb_artistsReview.Size = new Size(900, 378);
+            gb_artistsReview.TabIndex = 3;
+            gb_artistsReview.TabStop = false;
+            gb_artistsReview.Text = "Artists To Review";
+            // 
+            // btn_artistsReview_remove
+            // 
+            btn_artistsReview_remove.Location = new Point(170, 329);
+            btn_artistsReview_remove.Name = "btn_artistsReview_remove";
+            btn_artistsReview_remove.Size = new Size(105, 29);
+            btn_artistsReview_remove.TabIndex = 3;
+            btn_artistsReview_remove.Text = "Remove";
+            btn_artistsReview_remove.UseVisualStyleBackColor = true;
+            btn_artistsReview_remove.Click += btn_artistsReview_remove_Click;
+            // 
+            // btn_artistsReview_add
+            // 
+            btn_artistsReview_add.Location = new Point(6, 329);
+            btn_artistsReview_add.Name = "btn_artistsReview_add";
+            btn_artistsReview_add.Size = new Size(105, 29);
+            btn_artistsReview_add.TabIndex = 2;
+            btn_artistsReview_add.Text = "Add";
+            btn_artistsReview_add.UseVisualStyleBackColor = true;
+            btn_artistsReview_add.Click += btn_artistsReview_add_Click;
+            // 
+            // lb_artistsReview_genres
+            // 
+            lb_artistsReview_genres.FormattingEnabled = true;
+            lb_artistsReview_genres.ItemHeight = 15;
+            lb_artistsReview_genres.Location = new Point(492, 35);
+            lb_artistsReview_genres.Name = "lb_artistsReview_genres";
+            lb_artistsReview_genres.Size = new Size(377, 274);
+            lb_artistsReview_genres.TabIndex = 1;
+            // 
+            // lb_artistsReview_artists
+            // 
+            lb_artistsReview_artists.FormattingEnabled = true;
+            lb_artistsReview_artists.ItemHeight = 15;
+            lb_artistsReview_artists.Location = new Point(6, 35);
+            lb_artistsReview_artists.Name = "lb_artistsReview_artists";
+            lb_artistsReview_artists.Size = new Size(418, 274);
+            lb_artistsReview_artists.TabIndex = 0;
+            lb_artistsReview_artists.SelectedValueChanged += lb_artistsReview_artists_Change;
+            // 
             // GrapherForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(2008, 919);
+            ClientSize = new Size(1894, 767);
+            Controls.Add(gb_artistsReview);
             Controls.Add(gb_Actions);
             Controls.Add(gb_Tokens);
             Controls.Add(gb_Environment);
@@ -363,6 +422,7 @@
             gb_Tokens.ResumeLayout(false);
             gb_Tokens.PerformLayout();
             gb_Actions.ResumeLayout(false);
+            gb_artistsReview.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -399,5 +459,10 @@
         private TextBox tb_Tokens_ClientID;
         private GroupBox gb_Actions;
         private Button btn_Actions_GraphArtists;
+        private GroupBox gb_artistsReview;
+        private ListBox lb_artistsReview_artists;
+        private Button btn_artistsReview_remove;
+        private Button btn_artistsReview_add;
+        private ListBox lb_artistsReview_genres;
     }
 }
