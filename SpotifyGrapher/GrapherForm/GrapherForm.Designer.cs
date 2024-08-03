@@ -64,6 +64,7 @@
             btn_artistsReview_add = new Button();
             lb_artistsReview_genres = new ListBox();
             lb_artistsReview_artists = new ListBox();
+            btn_Actions_AddAlbums = new Button();
             gb_Environment.SuspendLayout();
             gb_Tokens.SuspendLayout();
             gb_Actions.SuspendLayout();
@@ -336,6 +337,7 @@
             // 
             // gb_Actions
             // 
+            gb_Actions.Controls.Add(btn_Actions_AddAlbums);
             gb_Actions.Controls.Add(btn_Actions_GraphArtists);
             gb_Actions.Location = new Point(1451, 12);
             gb_Actions.Name = "gb_Actions";
@@ -406,6 +408,16 @@
             lb_artistsReview_artists.TabIndex = 0;
             lb_artistsReview_artists.SelectedValueChanged += lb_artistsReview_artists_Change;
             // 
+            // btn_Actions_AddAlbums
+            // 
+            btn_Actions_AddAlbums.Location = new Point(25, 101);
+            btn_Actions_AddAlbums.Name = "btn_Actions_AddAlbums";
+            btn_Actions_AddAlbums.Size = new Size(161, 36);
+            btn_Actions_AddAlbums.TabIndex = 1;
+            btn_Actions_AddAlbums.Text = "Add Albums - START";
+            btn_Actions_AddAlbums.UseVisualStyleBackColor = true;
+            btn_Actions_AddAlbums.Click += btn_Actions_AddAlbums_Click;
+            // 
             // GrapherForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -464,5 +476,6 @@
         private Button btn_artistsReview_remove;
         private Button btn_artistsReview_add;
         private ListBox lb_artistsReview_genres;
+        private Button btn_Actions_AddAlbums;
     }
 }

@@ -6,7 +6,7 @@ namespace GrapherForm
     public static class FileHandler
     {
         public static EnvironmentG GetEnvironment(string filePath, out Dictionary<string, FoundArtist> foundArtists, out Dictionary<string, FoundArtist> reviewArtists,
-            out Dictionary<string, FoundArtist> removedArtists, out Dictionary<string, string> musicFinished, out Dictionary<string, MusicToReview> musicToReview)
+            out Dictionary<string, FoundArtist> removedArtists, out Dictionary<string, List<string>> musicFinished, out Dictionary<string, List<MusicToReview>> musicToReview)
         {
             EnvironmentG environment = null;
             foundArtists = null;
@@ -40,13 +40,13 @@ namespace GrapherForm
                 if (File.Exists(environment.MusicFinishedFile))
                 {
                     string json = File.ReadAllText(environment.MusicFinishedFile);
-                    musicFinished = JsonSerializer.Deserialize<Dictionary<string, string>>(json);
+                    musicFinished = JsonSerializer.Deserialize<Dictionary<string, List<string>>>(json);
                 }
 
                 if (File.Exists(environment.MusicToReviewFile))
                 {
                     string json = File.ReadAllText(environment.MusicToReviewFile);
-                    musicToReview = JsonSerializer.Deserialize<Dictionary<string, MusicToReview>>(json);
+                    musicToReview = JsonSerializer.Deserialize<Dictionary<string, List<MusicToReview>>>(json);
                 }
             }
             else
@@ -57,7 +57,7 @@ namespace GrapherForm
         }
 
         public static void SaveEnvironment(string environmentPath, EnvironmentG environment, Dictionary<string, FoundArtist> foundArtists, Dictionary<string, FoundArtist> reviewArtists,
-            Dictionary<string, FoundArtist> removedArtists, Dictionary<string, string> musicFinished, Dictionary<string, MusicToReview> musicToReview)
+            Dictionary<string, FoundArtist> removedArtists, Dictionary<string, List<string>> musicFinished, Dictionary<string, List<MusicToReview>> musicToReview)
         {
             JsonSerializerOptions options = new()
             {

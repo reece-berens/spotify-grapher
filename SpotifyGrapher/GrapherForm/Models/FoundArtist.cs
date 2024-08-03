@@ -15,5 +15,8 @@ namespace GrapherForm.Models
 
         [JsonPropertyName("s")]
         public List<string> Genres { get; set; }
+
+        [JsonPropertyName("a")]
+        public bool? AlbumsVisited { get; set; }
     }
 }
