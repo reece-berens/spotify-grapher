@@ -58,17 +58,23 @@
             lbl_Tokens_Access = new Label();
             tb_Tokens_Access = new TextBox();
             gb_Actions = new GroupBox();
+            btn_Actions_AddAlbums = new Button();
             btn_Actions_GraphArtists = new Button();
             gb_artistsReview = new GroupBox();
             btn_artistsReview_remove = new Button();
             btn_artistsReview_add = new Button();
             lb_artistsReview_genres = new ListBox();
             lb_artistsReview_artists = new ListBox();
-            btn_Actions_AddAlbums = new Button();
+            gb_musicReview = new GroupBox();
+            btn_reviewMusic_remove = new Button();
+            btn_musicReview_add = new Button();
+            lb_musicReview_artists = new ListBox();
+            lb_musicReview_album = new ListBox();
             gb_Environment.SuspendLayout();
             gb_Tokens.SuspendLayout();
             gb_Actions.SuspendLayout();
             gb_artistsReview.SuspendLayout();
+            gb_musicReview.SuspendLayout();
             SuspendLayout();
             // 
             // gb_Environment
@@ -346,6 +352,16 @@
             gb_Actions.TabStop = false;
             gb_Actions.Text = "Actions";
             // 
+            // btn_Actions_AddAlbums
+            // 
+            btn_Actions_AddAlbums.Location = new Point(25, 101);
+            btn_Actions_AddAlbums.Name = "btn_Actions_AddAlbums";
+            btn_Actions_AddAlbums.Size = new Size(161, 36);
+            btn_Actions_AddAlbums.TabIndex = 1;
+            btn_Actions_AddAlbums.Text = "Add Albums - START";
+            btn_Actions_AddAlbums.UseVisualStyleBackColor = true;
+            btn_Actions_AddAlbums.Click += btn_Actions_AddAlbums_Click;
+            // 
             // btn_Actions_GraphArtists
             // 
             btn_Actions_GraphArtists.Location = new Point(25, 46);
@@ -364,7 +380,7 @@
             gb_artistsReview.Controls.Add(lb_artistsReview_artists);
             gb_artistsReview.Location = new Point(523, 290);
             gb_artistsReview.Name = "gb_artistsReview";
-            gb_artistsReview.Size = new Size(900, 378);
+            gb_artistsReview.Size = new Size(708, 378);
             gb_artistsReview.TabIndex = 3;
             gb_artistsReview.TabStop = false;
             gb_artistsReview.Text = "Artists To Review";
@@ -393,9 +409,9 @@
             // 
             lb_artistsReview_genres.FormattingEnabled = true;
             lb_artistsReview_genres.ItemHeight = 15;
-            lb_artistsReview_genres.Location = new Point(492, 35);
+            lb_artistsReview_genres.Location = new Point(397, 35);
             lb_artistsReview_genres.Name = "lb_artistsReview_genres";
-            lb_artistsReview_genres.Size = new Size(377, 274);
+            lb_artistsReview_genres.Size = new Size(273, 274);
             lb_artistsReview_genres.TabIndex = 1;
             // 
             // lb_artistsReview_artists
@@ -404,25 +420,68 @@
             lb_artistsReview_artists.ItemHeight = 15;
             lb_artistsReview_artists.Location = new Point(6, 35);
             lb_artistsReview_artists.Name = "lb_artistsReview_artists";
-            lb_artistsReview_artists.Size = new Size(418, 274);
+            lb_artistsReview_artists.Size = new Size(355, 274);
             lb_artistsReview_artists.TabIndex = 0;
             lb_artistsReview_artists.SelectedValueChanged += lb_artistsReview_artists_Change;
             // 
-            // btn_Actions_AddAlbums
+            // gb_musicReview
             // 
-            btn_Actions_AddAlbums.Location = new Point(25, 101);
-            btn_Actions_AddAlbums.Name = "btn_Actions_AddAlbums";
-            btn_Actions_AddAlbums.Size = new Size(161, 36);
-            btn_Actions_AddAlbums.TabIndex = 1;
-            btn_Actions_AddAlbums.Text = "Add Albums - START";
-            btn_Actions_AddAlbums.UseVisualStyleBackColor = true;
-            btn_Actions_AddAlbums.Click += btn_Actions_AddAlbums_Click;
+            gb_musicReview.Controls.Add(btn_reviewMusic_remove);
+            gb_musicReview.Controls.Add(btn_musicReview_add);
+            gb_musicReview.Controls.Add(lb_musicReview_artists);
+            gb_musicReview.Controls.Add(lb_musicReview_album);
+            gb_musicReview.Location = new Point(1257, 299);
+            gb_musicReview.Name = "gb_musicReview";
+            gb_musicReview.Size = new Size(623, 431);
+            gb_musicReview.TabIndex = 4;
+            gb_musicReview.TabStop = false;
+            gb_musicReview.Text = "Music To Review";
+            // 
+            // btn_reviewMusic_remove
+            // 
+            btn_reviewMusic_remove.Location = new Point(464, 94);
+            btn_reviewMusic_remove.Name = "btn_reviewMusic_remove";
+            btn_reviewMusic_remove.Size = new Size(111, 37);
+            btn_reviewMusic_remove.TabIndex = 3;
+            btn_reviewMusic_remove.Text = "Remove";
+            btn_reviewMusic_remove.UseVisualStyleBackColor = true;
+            btn_reviewMusic_remove.Click += btn_reviewMusic_remove_Click;
+            // 
+            // btn_musicReview_add
+            // 
+            btn_musicReview_add.Location = new Point(464, 26);
+            btn_musicReview_add.Name = "btn_musicReview_add";
+            btn_musicReview_add.Size = new Size(111, 39);
+            btn_musicReview_add.TabIndex = 2;
+            btn_musicReview_add.Text = "Add";
+            btn_musicReview_add.UseVisualStyleBackColor = true;
+            btn_musicReview_add.Click += btn_reviewMusic_add_Click;
+            // 
+            // lb_musicReview_artists
+            // 
+            lb_musicReview_artists.FormattingEnabled = true;
+            lb_musicReview_artists.ItemHeight = 15;
+            lb_musicReview_artists.Location = new Point(15, 275);
+            lb_musicReview_artists.Name = "lb_musicReview_artists";
+            lb_musicReview_artists.Size = new Size(414, 94);
+            lb_musicReview_artists.TabIndex = 1;
+            // 
+            // lb_musicReview_album
+            // 
+            lb_musicReview_album.FormattingEnabled = true;
+            lb_musicReview_album.ItemHeight = 15;
+            lb_musicReview_album.Location = new Point(15, 26);
+            lb_musicReview_album.Name = "lb_musicReview_album";
+            lb_musicReview_album.Size = new Size(414, 214);
+            lb_musicReview_album.TabIndex = 0;
+            lb_musicReview_album.SelectedValueChanged += lb_musicReview_album_Change;
             // 
             // GrapherForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1894, 767);
+            Controls.Add(gb_musicReview);
             Controls.Add(gb_artistsReview);
             Controls.Add(gb_Actions);
             Controls.Add(gb_Tokens);
@@ -435,6 +494,7 @@
             gb_Tokens.PerformLayout();
             gb_Actions.ResumeLayout(false);
             gb_artistsReview.ResumeLayout(false);
+            gb_musicReview.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -477,5 +537,10 @@
         private Button btn_artistsReview_add;
         private ListBox lb_artistsReview_genres;
         private Button btn_Actions_AddAlbums;
+        private GroupBox gb_musicReview;
+        private Button btn_musicReview_add;
+        private ListBox lb_musicReview_artists;
+        private ListBox lb_musicReview_album;
+        private Button btn_reviewMusic_remove;
     }
 }

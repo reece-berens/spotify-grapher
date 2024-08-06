@@ -26,6 +26,8 @@ namespace GrapherForm
             "box set",
             "boxed set",
             "expanded",
+            "commentary",
+            "anniversary",
         ];
 
         public GrapherForm()
@@ -56,6 +58,7 @@ namespace GrapherForm
                 tb_Tokens_ClientSecret.Text = environment.ClientSecret;
 
                 ResetReviewArtistListBox();
+                ResetReviewMusicListBox();
             }
         }
 
@@ -282,7 +285,7 @@ namespace GrapherForm
                     //      get all songs and add to playlist
                     //  if album is not named good
                     //      add to review list
-                    AlbumsOfArtistResponse albumListResponse = new() { next = null};
+                    AlbumsOfArtistResponse albumListResponse = new() { next = null };
                     do
                     {
                         albumListResponse = await APIHandler.GetAlbumsOfArtist(curArtist.Key, _tempAccessToken, albumListResponse.next);
@@ -373,6 +376,122 @@ namespace GrapherForm
                     }
                 }
             }
+        }
+
+        private async void btn_reviewMusic_add_Click(object sender, EventArgs e)
+        {
+            Task waitTask;
+            object item = lb_musicReview_album.SelectedValue;
+            if (item is string typeItem)
+            {
+                string[] parts = typeItem.Split("~");
+                if (parts.Length == 2 && _musicToReview.TryGetValue(parts[0], out List<MusicToReview> musicReviewItem))
+                {
+                    //parts[0] is artist, parts[1] is album
+                    MusicToReview musicItem = musicReviewItem.Find(x => x.ID == parts[1]);
+                    if (musicItem != null)
+                    {
+                        TracksResponse tracksResponse = new() { next = null };
+                        do
+                        {
+                            tracksResponse = await APIHandler.GetSongsInAlbum(parts[1], tb_Tokens_Access.Text, tracksResponse.next);
+                            waitTask = Task.Delay(_random.Next(3000, 4000));
+                            waitTask.Wait();
+                            if (tracksResponse != null && tracksResponse.items != null && tracksResponse.items.Count > 0)
+                            {
+                                AddTracksRequest newRequest = new()
+                                {
+                                    uris = [.. tracksResponse.items.Select(x => x.uri)]
+                                };
+                                bool didSuccessSave = await APIHandler.AddSongsToPlaylist(tb_Environment_PlaylistID.Text, newRequest, tb_Tokens_Access.Text);
+                                waitTask = Task.Delay(_random.Next(3000, 4000));
+                                waitTask.Wait();
+                            }
+                        } while (tracksResponse != null && !string.IsNullOrEmpty(tracksResponse.next));
+
+                        musicReviewItem.Remove(musicItem);
+                        if (!_musicFinished.TryGetValue(parts[0], out List<string> finishedList))
+                        {
+                            finishedList = [];
+                            _musicFinished.Add(parts[0], finishedList);
+                        }
+                        finishedList.Add(parts[1]);
+                    }
+                }
+            }
+            ResetReviewMusicListBox();
+        }
+
+        private void btn_reviewMusic_remove_Click(object sender, EventArgs e)
+        {
+            object item = lb_musicReview_album.SelectedValue;
+            if (item is string typeItem)
+            {
+                string[] parts = typeItem.Split("~");
+                if (parts.Length == 2 && _musicToReview.TryGetValue(parts[0], out List<MusicToReview> musicReviewItem))
+                {
+                    //parts[0] is artist, parts[1] is album
+                    MusicToReview musicItem = musicReviewItem.Find(x => x.ID == parts[1]);
+                    if (musicItem != null)
+                    {
+                        //get all artists here and put in 2nd list box
+                        musicReviewItem.Remove(musicItem);
+                        if (!_musicFinished.TryGetValue(parts[0], out List<string> finishedList))
+                        {
+                            finishedList = [];
+                            _musicFinished.Add(parts[0], finishedList);
+                        }
+                        finishedList.Add(parts[1]);
+                    }
+                }
+            }
+            ResetReviewMusicListBox();
+        }
+
+        private void lb_musicReview_album_Change(object sender, EventArgs e)
+        {
+            object item = lb_musicReview_album.SelectedValue;
+            if (item is string typeItem)
+            {
+                string[] parts = typeItem.Split("~");
+                if (parts.Length == 2 && _musicToReview.TryGetValue(parts[0], out List<MusicToReview> musicReviewItem))
+                {
+                    //parts[0] is artist, parts[1] is album
+                    MusicToReview musicItem = musicReviewItem.Find(x => x.ID == parts[1]);
+                    if (musicItem != null) 
+                    {
+                        //get all artists here and put in 2nd list box
+                        lb_musicReview_artists.DataSource = musicItem.Artists.Select(x => x.ArtistName).ToList();
+                    }
+                    else
+                    {
+                        lb_musicReview_artists.DataSource = null;
+                    }
+                }
+                else
+                {
+                    lb_musicReview_artists.DataSource = null;
+                }
+            }
+            else
+            {
+                lb_musicReview_artists.DataSource = null;
+            }
+        }
+
+        private void ResetReviewMusicListBox()
+        {
+            Dictionary<string, string> musicLBData = [];
+            foreach (KeyValuePair<string, List<MusicToReview>> fullDictItem in _musicToReview)
+            {
+                foreach (MusicToReview musicItem in fullDictItem.Value)
+                {
+                    musicLBData.TryAdd($"{fullDictItem.Key}~{musicItem.ID}", musicItem.AlbumName);
+                }
+            }
+            lb_musicReview_album.DataSource = new BindingSource(musicLBData, null);
+            lb_musicReview_album.DisplayMember = "Value";
+            lb_musicReview_album.ValueMember = "Key";
         }
     }
 }
